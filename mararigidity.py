@@ -23,6 +23,7 @@ def getElement(a,z):
 listName = open("elements.txt","r").readlines()
 
 window = tk.Tk()
+window.title('MARA Rigidity Calculator')
 
 frm_proj = tk.Frame(master = window, relief=tk.RAISED, borderwidth=1)
 frm_proj.grid(row=0,column=0, padx=5, pady=5)
@@ -53,18 +54,18 @@ lbl_nameproj = tk.Label(master=frm_projsymb, width=5, text="")
 lbl_nameproj.pack()
 frm_radproj = tk.Frame(master = frm_proj, relief=tk.FLAT)
 frm_radproj.pack()
-lbl_radproj = tk.Label(master=frm_radproj, text="Radius ")
+lbl_radproj = tk.Label(master=frm_radproj, text="Radius = ")
 lbl_radproj.grid(row=0,column=0,sticky='e')
 lbl_radproj_res = tk.Label(master=frm_radproj,text="")
 lbl_radproj_res.grid(row=0,column=1)
-lbl_radproj_unit = tk.Label(master=frm_radproj,text=" fm")
+lbl_radproj_unit = tk.Label(master=frm_radproj,text="fm")
 lbl_radproj_unit.grid(row=0,column=2,sticky='w')
 
 def updateProj(event):
     n, symbol = getElement(ent_Aproj.get(),ent_Zproj.get())
     lbl_Nproj_res["text"] = str(n)
     a = int(ent_Aproj.get())
-    lbl_radproj["text"] = round(r0*(a**(1/3)),2)
+    lbl_radproj_res["text"] = round(r0*(a**(1/3)),2)
     show = ''
     if int(ent_Zproj.get()) > 118:
         lbl_nameproj["text"] = 'Error'
@@ -110,18 +111,18 @@ lbl_nametarg = tk.Label(master=frm_targsymb, width=5, text="")
 lbl_nametarg.pack()
 frm_radtarg = tk.Frame(master = frm_targ, relief=tk.FLAT)
 frm_radtarg.pack()
-lbl_radtarg = tk.Label(master=frm_radtarg, text="Radius ")
+lbl_radtarg = tk.Label(master=frm_radtarg, text="Radius = ")
 lbl_radtarg.grid(row=0,column=0,sticky='e')
 lbl_radtarg_res = tk.Label(master=frm_radtarg,text="")
 lbl_radtarg_res.grid(row=0,column=1)
-lbl_radtarg_unit = tk.Label(master=frm_radtarg,text=" fm")
+lbl_radtarg_unit = tk.Label(master=frm_radtarg,text="fm")
 lbl_radtarg_unit.grid(row=0,column=2,sticky='w')
 
 def updateTarg(event):
     n, symbol = getElement(ent_Atarg.get(),ent_Ztarg.get())
     lbl_Ntarg_res["text"] = str(n)
     a = int(ent_Atarg.get())
-    lbl_radtarg["text"] = round(r0*(a**(1/3)),2)
+    lbl_radtarg_res["text"] = round(r0*(a**(1/3)),2)
     show = ''
     if int(ent_Ztarg.get()) > 118:
         lbl_nametarg["text"] = 'Error'
@@ -184,10 +185,69 @@ def updateComp(event):
     show += superscript[int(a)]
     lbl_namecomp["text"] = show + symbol
 
+frm_refr = tk.Frame(master = window, relief=tk.RAISED, borderwidth=1)
+frm_refr.grid(row=1,column=1, padx=5, pady=5)
+frm_refrtitle = tk.Frame(master = frm_refr, relief=tk.FLAT)
+frm_refrtitle.pack()
+lbl_refr = tk.Label(master=frm_refrtitle, text="Reference", width=20)
+lbl_refr.pack()
+
+frm_refrboxes = tk.Frame(master = frm_refr, relief=tk.FLAT)
+frm_refrboxes.pack()
+lbl_Arefr = tk.Label(master=frm_refrboxes, text="A", width=2)
+lbl_Arefr.grid(row=0, column=0)
+ent_Arefr = tk.Entry(master=frm_refrboxes, width=5)
+ent_Arefr.grid(row=0,column=1)
+ent_Arefr.insert(0,"0")
+lbl_Zrefr = tk.Label(master=frm_refrboxes, text="Z", width=2)
+lbl_Zrefr.grid(row=1, column=0)
+ent_Zrefr = tk.Entry(master=frm_refrboxes, width=5)
+ent_Zrefr.grid(row=1,column=1)
+ent_Zrefr.insert(0,"0")
+lbl_Nrefr = tk.Label(master=frm_refrboxes, text="N", width=2)
+lbl_Nrefr.grid(row=2, column=0)
+lbl_Nrefr_res = tk.Label(master=frm_refrboxes, width=5, text="")
+lbl_Nrefr_res.grid(row=2,column=1)
+frm_refrsymb = tk.Frame(master = frm_refr, relief=tk.FLAT)
+frm_refrsymb.pack()
+lbl_namerefr = tk.Label(master=frm_refrsymb, width=5, text="")
+lbl_namerefr.pack()
+frm_Krefr = tk.Frame(master = frm_refr, relief=tk.FLAT)
+frm_Krefr.pack()
+lbl_Krefr = tk.Label(master=frm_Krefr, text="Energy ")
+lbl_Krefr.grid(row=0,column=0)
+ent_Krefr = tk.Entry(master=frm_Krefr, width=5)
+ent_Krefr.grid(row=0,column=1)
+ent_Krefr.insert(0,"0")
+lbl_Krefr_unit = tk.Label(master=frm_Krefr, text=' MeV')
+lbl_Krefr_unit.grid(row=0,column=2)
+
+
+def updateRefr(event):
+    n, symbol = getElement(ent_Arefr.get(),ent_Zrefr.get())
+    lbl_Nrefr_res["text"] = str(n)
+    a = int(ent_Arefr.get())
+    show = ''
+    if int(ent_Zrefr.get()) > 118:
+        lbl_namerefr["text"] = 'Error'
+    else:
+        if a >= 100:
+            hunds = int(a/100)
+            a -= 100*hunds
+            show += superscript[hunds]
+            if a == 0: show += superscript[0]
+        if a >= 10:
+            tens = int(a/10)
+            a -= 10*tens
+            show += superscript[tens]
+        show += superscript[int(a)]
+        lbl_namerefr["text"] = show + symbol
+
 def update(event):
     updateProj(event)
     updateTarg(event)
     updateComp(event)
+    updateRefr(event)
 
 window.bind('<Return>', update)
 window.bind('<KP_Enter>', update)
