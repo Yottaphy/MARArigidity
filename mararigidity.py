@@ -574,6 +574,182 @@ def updateRigid(event):
     lbl_SepCh_res['text']        = round(800/float(ent_chstSelector_res.get()), 2)
     lbl_SepM_res['text']         = round(800/float(ent_Arefr.get()), 2)
     lbl_Sep_res['text']          = round(float(ent_Arefr.get())/float(ent_chstSelector_res.get()), 2)
+    
+frm_reac = tk.Frame(master = window, relief=tk.RAISED, borderwidth=1)
+frm_reac.grid(row=0,column=3, rowspan=3, padx=5, pady=5, sticky = 'nsew')
+frm_reactitle = tk.Frame(master = frm_reac, relief=tk.FLAT)
+frm_reactitle.grid(row=0, sticky='n')
+lbl_reac = tk.Label(master=frm_reactitle, text="Reaction Channels", width=80, font='Helvetica 12 bold')
+lbl_reac.pack()
+frm_dqenter = tk.Frame(master = frm_reac, relief=tk.FLAT)
+frm_dqenter.grid(row=1, sticky='n')
+lbl_dqenter = tk.Label(master=frm_dqenter, text="Selected δq")
+lbl_dqenter.grid(row=0,column=0, sticky='w')
+ent_dqenter = tk.Entry(master=frm_dqenter, width = 10)
+ent_dqenter.grid(row=0,column=1, sticky='e')
+lbl_dqenter_unit = tk.Label(master=frm_dqenter, text=" e")
+lbl_dqenter_unit.grid(row=0,column=2, sticky='w')
+lbl_dqenter_unit = tk.Label(master=frm_dqenter, text="\tEdit this field to set the charge state of the possible reaction channels.", font='Calibri 10 italic')
+lbl_dqenter_unit.grid(row=0,column=3, sticky='e')
+frm_reacboxes_spacer = tk.Frame(master = frm_reac, relief=tk.FLAT)
+frm_reacboxes_spacer.grid(row=2, sticky='we')
+lbl_reacboxes_spacer = tk.Label(master=frm_reacboxes_spacer, text="\t")
+lbl_reacboxes_spacer.pack()
+frm_reacboxes = tk.Frame(master = frm_reac, relief=tk.FLAT)
+frm_reacboxes.grid(row=3, sticky='we')
+
+def updateChans(event):
+    compA = float(lbl_Acomp_res['text'])
+    refrA = float(ent_Arefr.get())
+    diffA = compA - refrA
+
+    compZ = float(lbl_Zcomp_res['text'])
+    refrZ = float(ent_Zrefr.get())
+    diffZ = compZ - refrZ
+    
+    row_n = 0
+    lbl_reacchan = tk.Label(master=frm_reacboxes, text='Channel', font='Calibri 12 bold')
+    lbl_reacchan.grid(row=row_n,column=0, sticky='w')
+    lbl_reacchan_p = tk.Label(master=frm_reacboxes, text= 'p', font='Calibri 12 bold')
+    lbl_reacchan_p.grid(row=row_n,column=1, sticky='')
+    lbl_reacchan_n = tk.Label(master=frm_reacboxes, text= 'n', font='Calibri 12 bold')
+    lbl_reacchan_n.grid(row=row_n,column=2, sticky='')
+    lbl_reacchan_a = tk.Label(master=frm_reacboxes, text= 'α', font='Calibri 12 bold')
+    lbl_reacchan_a.grid(row=row_n,column=3, sticky='')
+    lbl_reacchan_spacer = tk.Label(master=frm_reacboxes, text='\t', font='Calibri 12 bold')
+    lbl_reacchan_spacer.grid(row=row_n,column=4, sticky='')
+    lbl_reacchan_A = tk.Label(master=frm_reacboxes, text='A', font='Calibri 12 bold')
+    lbl_reacchan_A.grid(row=row_n,column=5, sticky='')
+    lbl_reacchan_Z = tk.Label(master=frm_reacboxes, text='Z', font='Calibri 12 bold')
+    lbl_reacchan_Z.grid(row=row_n,column=6, sticky='')
+    lbl_reacchan_name = tk.Label(master=frm_reacboxes, text='Name', font='Calibri 12 bold')
+    lbl_reacchan_name.grid(row=row_n,column=7, sticky='')
+    lbl_reacchan_spacer = tk.Label(master=frm_reacboxes, text='\t', font='Calibri 12 bold')
+    lbl_reacchan_spacer.grid(row=row_n,column=8, sticky='')
+    lbl_reacchan_q = tk.Label(master=frm_reacboxes, text='q', font='Calibri 12 bold')
+    lbl_reacchan_q.grid(row=row_n,column=9, sticky='')
+    lbl_reacchan_mq = tk.Label(master=frm_reacboxes, text='m/q', font='Calibri 12 bold')
+    lbl_reacchan_mq.grid(row=row_n,column=10, sticky='')
+    lbl_reacchan_dmq = tk.Label(master=frm_reacboxes, text='δ(m/q)', font='Calibri 12 bold')
+    lbl_reacchan_dmq.grid(row=row_n,column=11, sticky='')
+    lbl_reacchan_pos = tk.Label(master=frm_reacboxes, text='pos [mm]', font='Calibri 12 bold')
+    lbl_reacchan_pos.grid(row=row_n,column=12, sticky='')
+    lbl_reacchan_pos = tk.Label(master=frm_reacboxes, text='\tpos from ref', font='Calibri 12 bold')
+    lbl_reacchan_pos.grid(row=row_n,column=13, sticky='w')
+
+
+    for i in range(3):
+        for j in range(10):
+            for k in range(10):
+                if i+j+k < 5:
+                    row_n +=1
+
+                    lbl_reacchan = tk.Label(master=frm_reacboxes, text='')
+                    lbl_reacchan.grid(row=row_n,column=0, sticky='w')
+                    lbl_reacchan_p = tk.Label(master=frm_reacboxes, text= '')
+                    lbl_reacchan_p.grid(row=row_n,column=1, sticky='')
+                    lbl_reacchan_n = tk.Label(master=frm_reacboxes, text= '')
+                    lbl_reacchan_n.grid(row=row_n,column=2, sticky='')
+                    lbl_reacchan_a = tk.Label(master=frm_reacboxes, text= '')
+                    lbl_reacchan_a.grid(row=row_n,column=3, sticky='')
+
+                    lbl_reacchan_A = tk.Label(master=frm_reacboxes, text='')
+                    lbl_reacchan_A.grid(row=row_n,column=5, sticky='')
+                    lbl_reacchan_Z = tk.Label(master=frm_reacboxes, text='')
+                    lbl_reacchan_Z.grid(row=row_n,column=6, sticky='')
+                    lbl_reacchan_name = tk.Label(master=frm_reacboxes, text='')
+                    lbl_reacchan_name.grid(row=row_n,column=7, sticky='')
+
+                    lbl_reacchan_q = tk.Label(master=frm_reacboxes, text='')
+                    lbl_reacchan_q.grid(row=row_n,column=9, sticky='')
+                    lbl_reacchan_mq = tk.Label(master=frm_reacboxes, text='')
+                    lbl_reacchan_mq.grid(row=row_n,column=10, sticky='')
+                    lbl_reacchan_dmq = tk.Label(master=frm_reacboxes, text='')
+                    lbl_reacchan_dmq.grid(row=row_n,column=11, sticky='')
+                    lbl_reacchan_pos = tk.Label(master=frm_reacboxes, text='')
+                    lbl_reacchan_pos.grid(row=row_n,column=12, sticky='')
+                    lbl_reacchan_posref = tk.Label(master=frm_reacboxes, text='')
+                    lbl_reacchan_posref.grid(row=row_n,column=13, sticky='')
+                    lbl_reacchan_overlap = tk.Label(master=frm_reacboxes, text='')
+                    lbl_reacchan_overlap.grid(row=row_n,column=14, sticky='')
+
+                    if i+j+k == 0:
+                        lbl_reacchan['text']='No evap.'
+                    else:
+                        if i == 0: 
+                            if j == 0:
+                                lbl_reacchan['text']= str(k) +'p'
+                            else: 
+                                if k == 0:
+                                    lbl_reacchan['text']= str(j) + 'n'
+                                else:
+                                    lbl_reacchan['text']= str(k) +'p' + str(j) + 'n'
+                        else:
+                            if k == 0:
+                                if j == 0: 
+                                    lbl_reacchan['text']= str(i) +'α'
+                                else:
+                                    lbl_reacchan['text']= str(i) +'α' + str(j) + 'n'
+                            else:
+                                if j == 0: 
+                                    lbl_reacchan['text']= str(i) +'α' + str(k) +'p'
+                                else:
+                                    lbl_reacchan['text']= str(i) +'α' + str(k) +'p' + str(j) + 'n'
+
+                    lbl_reacchan_p['text'] = k
+                    lbl_reacchan_n['text'] = j
+                    lbl_reacchan_a['text'] = i
+
+                    reacA = compA - (k+j+4*i)
+                    reacZ = compZ - (k+2*i)
+
+                    n, symbol = getElement(reacA,reacZ)
+                    a = reacA
+                    show = ''
+                    if a >= 100:
+                        hunds = int(a/100)
+                        a -= 100*hunds
+                        show += superscript[hunds]
+                        if a == 0: show += superscript[0]
+                    if a >= 10:
+                        tens = int(a/10)
+                        a -= 10*tens
+                        show += superscript[tens]
+                    show += superscript[int(a)]
+
+                    lbl_reacchan_A['text']    = int(reacA)
+                    lbl_reacchan_Z['text']    = int(reacZ)
+                    lbl_reacchan_name['text'] = show + symbol
+
+                    q = float(ent_chstSelector_res.get())+float(ent_dqenter.get())
+                    lbl_reacchan_q['text']      = round(q,1)
+
+                    mq = reacA / q
+                    lbl_reacchan_mq['text']     = round(mq,4)
+
+                    dmq = (mq / (float(ent_Arefr.get())/float(ent_chstSelector_res.get()))) -1                    
+                    lbl_reacchan_dmq['text']    = round(dmq,4)
+
+                    posref = 800*dmq
+                    lbl_reacchan_pos['text']    = round(posref +64, 1)
+                    lbl_reacchan_posref['text'] = round(posref, 1)
+                    if abs(posref) < 0.9*float(lbl_SepM_res['text']):
+                        lbl_reacchan_overlap['text'] = 'Overlap'
+                        
+                    if reacA == refrA and reacZ == refrZ:
+                        lbl_reacchan['font'] = 'Calibri 12 bold'
+                        lbl_reacchan_p['font'] = 'Calibri 12 bold'
+                        lbl_reacchan_n['font'] = 'Calibri 12 bold'
+                        lbl_reacchan_a['font'] = 'Calibri 12 bold'
+                        lbl_reacchan_A['font'] = 'Calibri 12 bold'
+                        lbl_reacchan_Z['font'] = 'Calibri 12 bold'
+                        lbl_reacchan_name['font'] = 'Calibri 12 bold'
+                        lbl_reacchan_q['font'] = 'Calibri 12 bold'
+                        lbl_reacchan_mq['font'] = 'Calibri 12 bold'
+                        lbl_reacchan_dmq['font'] = 'Calibri 12 bold'
+                        lbl_reacchan_pos['font'] = 'Calibri 12 bold'
+                        lbl_reacchan_posref['font'] = 'Calibri 12 bold'
+                        lbl_reacchan_overlap['font'] = 'Calibri 12 bold'
 
 def update(event):
     updateProj(event)
@@ -585,6 +761,7 @@ def update(event):
     updateScat(event)
     updateChst(event)
     updateRigid(event)
+    updateChans(event)
 
 window.bind('<Return>', update)
 window.bind('<KP_Enter>', update)
