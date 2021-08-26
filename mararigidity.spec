@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(['mararigidity.py'],
-             pathex=['~/Code/mararigidity', '/home/joromero/Code/mararigidity'],
+             pathex=['.', '/home/joromero/Code/mararigidity'],
              binaries=[],
              datas=[],
              hiddenimports=[],

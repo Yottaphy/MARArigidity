@@ -622,19 +622,19 @@ def updateChans(event):
     lbl_reacchan_A.grid(row=row_n,column=5, sticky='')
     lbl_reacchan_Z = tk.Label(master=frm_reacboxes, text='Z', font='Calibri 12 bold')
     lbl_reacchan_Z.grid(row=row_n,column=6, sticky='')
-    lbl_reacchan_name = tk.Label(master=frm_reacboxes, text='Name', font='Calibri 12 bold')
+    lbl_reacchan_name = tk.Label(master=frm_reacboxes, text='Recoil', font='Calibri 12 bold')
     lbl_reacchan_name.grid(row=row_n,column=7, sticky='')
     lbl_reacchan_spacer = tk.Label(master=frm_reacboxes, text='\t', font='Calibri 12 bold')
     lbl_reacchan_spacer.grid(row=row_n,column=8, sticky='')
-    lbl_reacchan_q = tk.Label(master=frm_reacboxes, text='q', font='Calibri 12 bold')
+    lbl_reacchan_q = tk.Label(master=frm_reacboxes, text='q\t', font='Calibri 12 bold')
     lbl_reacchan_q.grid(row=row_n,column=9, sticky='')
-    lbl_reacchan_mq = tk.Label(master=frm_reacboxes, text='m/q', font='Calibri 12 bold')
+    lbl_reacchan_mq = tk.Label(master=frm_reacboxes, text=' m/q\t', font='Calibri 12 bold')
     lbl_reacchan_mq.grid(row=row_n,column=10, sticky='')
-    lbl_reacchan_dmq = tk.Label(master=frm_reacboxes, text='δ(m/q)', font='Calibri 12 bold')
+    lbl_reacchan_dmq = tk.Label(master=frm_reacboxes, text=' δ(m/q)\t', font='Calibri 12 bold')
     lbl_reacchan_dmq.grid(row=row_n,column=11, sticky='')
-    lbl_reacchan_pos = tk.Label(master=frm_reacboxes, text='pos [mm]', font='Calibri 12 bold')
+    lbl_reacchan_pos = tk.Label(master=frm_reacboxes, text=' pos [mm]', font='Calibri 12 bold')
     lbl_reacchan_pos.grid(row=row_n,column=12, sticky='')
-    lbl_reacchan_pos = tk.Label(master=frm_reacboxes, text='\tpos from ref', font='Calibri 12 bold')
+    lbl_reacchan_pos = tk.Label(master=frm_reacboxes, text='pos from ref', font='Calibri 12 bold')
     lbl_reacchan_pos.grid(row=row_n,column=13, sticky='w')
 
 
@@ -725,10 +725,10 @@ def updateChans(event):
                     lbl_reacchan_q['text']      = round(q,1)
 
                     mq = reacA / q
-                    lbl_reacchan_mq['text']     = round(mq,4)
+                    lbl_reacchan_mq['text']     = round(mq,3)
 
                     dmq = (mq / (float(ent_Arefr.get())/float(ent_chstSelector_res.get()))) -1                    
-                    lbl_reacchan_dmq['text']    = round(dmq,4)
+                    lbl_reacchan_dmq['text']    = round(dmq,3)
 
                     posref = 800*dmq
                     lbl_reacchan_pos['text']    = round(posref +64, 1)
