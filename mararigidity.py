@@ -23,7 +23,6 @@ def getElement(a,z):
     return n, symbol
 
 listName = open("elements.txt","r").read().splitlines()
-print(listName)
 window = tk.Tk()
 window.configure(bg='#ededed')
 window.title('MARA Rigidity Calculator')
@@ -576,28 +575,44 @@ lbl_chstSelector_unit.grid(row=0,column=10, sticky='w')
 
 frm_rigidboxes = tk.Frame(master = frm_rigid, relief=tk.FLAT)
 frm_rigidboxes.grid(row=2, sticky='we')
-lbl_chstTable = tk.Label(master=frm_rigidboxes, text='Charge State', font='Calibri 12 bold')
-lbl_chstTable.grid(row=2,column=0, sticky='w')
-lbl_spacer = tk.Label(master=frm_rigidboxes, text='', font='Calibri 12 bold')
-lbl_spacer.grid(row=2,column=1)
-lbl_DeflU = tk.Label(master=frm_rigidboxes, text='Deflector U [V]', font='Calibri 12 bold')
-lbl_DeflU.grid(row=2,column=2)
-lbl_DipField = tk.Label(master=frm_rigidboxes, text='Dipole Field [T]', font='Calibri 12 bold')
-lbl_DipField.grid(row=2,column=3)
-lbl_spacer = tk.Label(master=frm_rigidboxes, text='', font='Calibri 12 bold')
-lbl_spacer.grid(row=2,column=4)
-lbl_SepCh = tk.Label(master=frm_rigidboxes, text='Charge Sep. [mm/e]')
-lbl_SepCh.grid(row=2,column=5)
-lbl_SepM = tk.Label(master=frm_rigidboxes, text='Mass Sep. [mm/u]')
-lbl_SepM.grid(row=2,column=6)
-lbl_Sep = tk.Label(master=frm_rigidboxes, text='Masses per Charge')
-lbl_Sep.grid(row=2,column=7)
 
 def updateRigid(event):
+    for widget in frm_rigidboxes.winfo_children():
+        widget.destroy()
+
+    lbl_chstTable = tk.Label(master=frm_rigidboxes, text='Charge State', font='Calibri 12 bold')
+    lbl_chstTable.grid(row=2,column=0, sticky='w')
+    lbl_spacer = tk.Label(master=frm_rigidboxes, text='', font='Calibri 12 bold')
+    lbl_spacer.grid(row=2,column=1)
+    lbl_DeflU = tk.Label(master=frm_rigidboxes, text='Deflector U [V]', font='Calibri 12 bold')
+    lbl_DeflU.grid(row=2,column=2)
+    lbl_DipField = tk.Label(master=frm_rigidboxes, text='Dipole Field [T]', font='Calibri 12 bold')
+    lbl_DipField.grid(row=2,column=3)
+    lbl_spacer = tk.Label(master=frm_rigidboxes, text='', font='Calibri 12 bold')
+    lbl_spacer.grid(row=2,column=4)
+    lbl_SepCh = tk.Label(master=frm_rigidboxes, text='Charge Sep. [mm/e]')
+    lbl_SepCh.grid(row=2,column=5)
+    lbl_SepM = tk.Label(master=frm_rigidboxes, text='Mass Sep. [mm/u]')
+    lbl_SepM.grid(row=2,column=6)
+    lbl_Sep = tk.Label(master=frm_rigidboxes, text='Masses per Charge')
+    lbl_Sep.grid(row=2,column=7)
+
     lbl_reminderchst_res['text'] = lbl_chstRefr_res['text']
     chstmin = float(ent_chstSelectorMin_res.get())
     chstmax = float(ent_chstSelectorMax_res.get())
-    if chstmax == 0 or chstmax < chstmin: chstmax = chstmin
+    if chstmax > float(lbl_Zcomp_res['text']): 
+        chstmax = float(lbl_Zcomp_res['text'])
+        ent_chstSelectorMax_res.delete(0,'end')
+        ent_chstSelectorMax_res.insert(0, lbl_Zcomp_res['text'])
+
+    if chstmin < 0: 
+        chstmin = 0
+        ent_chstSelectorMin_res.delete(0,'end')
+        ent_chstSelectorMin_res.insert(0,'0')
+    if chstmax == 0 or chstmax < chstmin: 
+        chstmax = chstmin
+        ent_chstSelectorMax_res.delete(0,'end')
+        ent_chstSelectorMax_res.insert(0, chstmin)
     
     diff = chstmax - chstmin
 
@@ -648,6 +663,9 @@ frm_reacboxes = tk.Frame(master = frm_reac, relief=tk.FLAT)
 frm_reacboxes.grid(row=3, sticky='we')
 
 def updateChans(event):
+    for widget in frm_reacboxes.winfo_children():
+        widget.destroy()
+
     if ent_dqenter.get() == '': return 0
     compA = float(lbl_Acomp_res['text'])
     refrA = float(ent_Arefr.get())
