@@ -22,14 +22,46 @@ def getElement(a,z):
     symbol = listName[z] if z < 119 else 'X'
     return n, symbol
 
-listName = open("elements.txt","r").readlines()
-
+listName = open("elements.txt","r").read().splitlines()
+print(listName)
 window = tk.Tk()
 window.configure(bg='#ededed')
 window.title('MARA Rigidity Calculator')
+frm_disclaimer = tk.Frame(master = window, relief=tk.FLAT, borderwidth=0)
+frm_disclaimer.grid(row=0,column=3, columnspan= 1, padx=5, pady=5, sticky = 'e')
+lbl_disclaimer = tk.Label(master=frm_disclaimer, text="© 2021 Jorge Romero, joromero@jyu.fi", bg='#ededed', font='Calibri 10 italic')
+lbl_disclaimer.pack(side=tk.LEFT)
+
+
+frm_namer = tk.Frame(master = window, relief=tk.RAISED, borderwidth=1)
+frm_namer.grid(row=0,column=0, columnspan= 1, padx=5, pady=5, sticky = 'nsew')
+lbl_namer_name = tk.Label(master=frm_namer, text="Z lookup", width=10, font='Helvetica 12 bold')
+lbl_namer_name.pack(side=tk.LEFT)
+lbl_symb_name = tk.Label(master=frm_namer, text="Symbol", width=6)
+lbl_symb_name.pack(side=tk.LEFT)
+ent_symb = tk.Entry(master=frm_namer, width=6)
+ent_symb.pack(side=tk.LEFT)
+lbl_Z_name = tk.Label(master=frm_namer, text="→ Z", width=3)
+lbl_Z_name.pack(side=tk.LEFT)
+lbl_Z = tk.Label(master=frm_namer, text='', width=6)
+lbl_Z.pack(side=tk.LEFT)
+
+def namer(event):
+    symb = ent_symb.get() 
+    if  symb == '': return 0
+    if not symb == 'n': 
+        symb = symb.title()
+    if symb == 'Nice':
+        lbl_Z['text'] = 69
+        return 0
+    if symb == 'Fy':
+        lbl_Z['text'] = 137
+        return 0
+    lbl_Z['text'] = listName.index(symb) if symb in listName else 'Error'
+
 
 frm_proj = tk.Frame(master = window, relief=tk.RAISED, borderwidth=1)
-frm_proj.grid(row=0,column=0, padx=5, pady=5, sticky = 'nsew')
+frm_proj.grid(row=1,column=0, padx=5, pady=5, sticky = 'nsew')
 frm_projtitle = tk.Frame(master = frm_proj, relief=tk.FLAT)
 frm_projtitle.pack()
 lbl_proj = tk.Label(master=frm_projtitle, text="Projectile", width=20, font='Helvetica 12 bold')
@@ -88,7 +120,7 @@ def updateProj(event):
         lbl_nameproj["text"] = show + symbol
 
 frm_targ = tk.Frame(master = window, relief=tk.RAISED, borderwidth=1)
-frm_targ.grid(row=0,column=1, padx=5, pady=5, sticky = 'nsew')
+frm_targ.grid(row=1,column=1, padx=5, pady=5, sticky = 'nsew')
 frm_targtitle = tk.Frame(master = frm_targ, relief=tk.FLAT)
 frm_targtitle.pack()
 lbl_targ = tk.Label(master=frm_targtitle, text="Target", width=20, font='Helvetica 12 bold')
@@ -147,7 +179,7 @@ def updateTarg(event):
         lbl_nametarg["text"] = show + symbol
 
 frm_comp = tk.Frame(master = window, relief=tk.RAISED, borderwidth=1)
-frm_comp.grid(row=1,column=1, padx=5, pady=5, sticky = 'nsew')
+frm_comp.grid(row=2,column=1, padx=5, pady=5, sticky = 'nsew')
 frm_comptitle = tk.Frame(master = frm_comp, relief=tk.FLAT)
 frm_comptitle.pack()
 lbl_comp = tk.Label(master=frm_comptitle, text="Compound", width=20, font='Helvetica 12 bold')
@@ -219,7 +251,7 @@ def updateComp(event):
     lbl_namecomp["text"] = show + symbol
 
 frm_refr = tk.Frame(master = window, relief=tk.RAISED, borderwidth=1)
-frm_refr.grid(row=1,column=0, padx=5, pady=5, sticky = 'nsew')
+frm_refr.grid(row=2,column=0, padx=5, pady=5, sticky = 'nsew')
 frm_refrtitle = tk.Frame(master = frm_refr, relief=tk.FLAT)
 frm_refrtitle.pack()
 lbl_refr = tk.Label(master=frm_refrtitle, text="Reference", width=20, font='Helvetica 12 bold')
@@ -297,7 +329,7 @@ def updateRefr(event):
 
 
 frm_energies = tk.Frame(master = window, relief=tk.RAISED, borderwidth=1)
-frm_energies.grid(row=0,column=2, padx=5, pady=5, sticky = 'nsew')
+frm_energies.grid(row=1,column=2, padx=5, pady=5, sticky = 'nsew')
 frm_energiestitle = tk.Frame(master = frm_energies, relief=tk.FLAT)
 frm_energiestitle.pack()
 lbl_energies = tk.Label(master=frm_energiestitle, text="Energies and Velocities", width=20, font='Helvetica 12 bold')
@@ -360,7 +392,7 @@ def updateKV(event):
     
     
 frm_scatter = tk.Frame(master = window, relief=tk.RAISED, borderwidth=1)
-frm_scatter.grid(row=1,column=2, padx=5, pady=5, sticky = 'nsew')
+frm_scatter.grid(row=2,column=2, padx=5, pady=5, sticky = 'nsew')
 frm_scattertitle = tk.Frame(master = frm_scatter, relief=tk.FLAT)
 frm_scattertitle.pack()
 lbl_scatter = tk.Label(master=frm_scattertitle, text="Scattered Data", width=20, font='Helvetica 12 bold')
@@ -441,7 +473,7 @@ def updateScat(event):
     lbl_backscV_res['text']   = f'{Vbscat:.3e}'
 
 frm_chstates = tk.Frame(master = window, relief=tk.RAISED, borderwidth=1)
-frm_chstates.grid(row=2,column=0, padx=5, pady=5, sticky = 'nsew')
+frm_chstates.grid(row=3,column=0, padx=5, pady=5, sticky = 'nsew')
 frm_chstatestitle = tk.Frame(master = frm_chstates, relief=tk.FLAT)
 frm_chstatestitle.pack()
 lbl_chstates = tk.Label(master=frm_chstatestitle, text="Charge States after\n Solid Target (C-foil)", width=20, font='Helvetica 12 bold')
@@ -510,73 +542,90 @@ def updateChst(event):
     lbl_chstRefr_res['text'] = round(Zrefr*(1+(vrefr/((Zrefr**0.45)*3.6E6))**(-1/0.6))**(-0.6), 3)
 
 frm_rigid = tk.Frame(master = window, relief=tk.RAISED, borderwidth=1)
-frm_rigid.grid(row=2,column=1, columnspan=2, padx=5, pady=5, sticky = 'nsew')
+frm_rigid.grid(row=3,column=1, columnspan=2, padx=5, pady=5, sticky = 'nsew')
 frm_rigidtitle = tk.Frame(master = frm_rigid, relief=tk.FLAT)
 frm_rigidtitle.grid(row=0, sticky='nwe')
 lbl_rigid = tk.Label(master=frm_rigidtitle, text="MARA Deflector and Magnet Settings", width=40, font='Helvetica 12 bold')
 lbl_rigid.pack()
-frm_rigidboxes = tk.Frame(master = frm_rigid, relief=tk.FLAT)
-frm_rigidboxes.grid(row=1, sticky='we')
-lbl_reminderchst = tk.Label(master=frm_rigidboxes, text='Recoil Charge State ')
+frm_rigidboxes0 = tk.Frame(master = frm_rigid, relief=tk.FLAT)
+frm_rigidboxes0.grid(row=1, sticky='we')
+lbl_reminderchst = tk.Label(master=frm_rigidboxes0, text='Recoil Charge State ')
 lbl_reminderchst.grid(row=0,column=0, sticky='w')
-lbl_reminderchst_res = tk.Label(master=frm_rigidboxes, text= '')
+lbl_reminderchst_res = tk.Label(master=frm_rigidboxes0, text= '')
 lbl_reminderchst_res.grid(row=0,column=1, sticky='e')
-lbl_reminderchst_unit = tk.Label(master=frm_rigidboxes, text=' e')
+lbl_reminderchst_unit = tk.Label(master=frm_rigidboxes0, text=' e')
 lbl_reminderchst_unit.grid(row=0,column=2, sticky='w')
-lbl_spacer = tk.Label(master=frm_rigidboxes, text='\t')
+lbl_spacer = tk.Label(master=frm_rigidboxes0, text='\t')
 lbl_spacer.grid(row=1,column=3)
-lbl_chstSelector = tk.Label(master=frm_rigidboxes, text='Select Charge State ')
-lbl_chstSelector.grid(row=0,column=4, sticky='e')
-ent_chstSelector_res = tk.Entry(master=frm_rigidboxes, width=10)
-ent_chstSelector_res.grid(row=0,column=5, sticky='e')
-ent_chstSelector_res.insert(0, '0')
-lbl_chstSelector_unit = tk.Label(master=frm_rigidboxes, text=' e')
+lbl_chstSelectorMin = tk.Label(master=frm_rigidboxes0, text='Min Charge State ')
+lbl_chstSelectorMin.grid(row=0,column=4, sticky='e')
+ent_chstSelectorMin_res = tk.Entry(master=frm_rigidboxes0, width=10)
+ent_chstSelectorMin_res.grid(row=0,column=5, sticky='e')
+ent_chstSelectorMin_res.insert(0, '0')
+lbl_chstSelector_unit = tk.Label(master=frm_rigidboxes0, text=' e')
 lbl_chstSelector_unit.grid(row=0,column=6, sticky='w')
-lbl_DeflU = tk.Label(master=frm_rigidboxes, text='Deflector U ', font='Calibri 12 bold')
-lbl_DeflU.grid(row=2,column=0, sticky='w', rowspan=2)
-lbl_DeflU_res = tk.Label(master=frm_rigidboxes, text= '', font='Calibri 12 bold')
-lbl_DeflU_res.grid(row=2,column=1, rowspan=2)
-lbl_DeflU_unit = tk.Label(master=frm_rigidboxes, text=' V', font='Calibri 12 bold')
-lbl_DeflU_unit.grid(row=2,column=2, sticky='w', rowspan=2)
-lbl_DipField = tk.Label(master=frm_rigidboxes, text='Dipole Field ', font='Calibri 12 bold')
-lbl_DipField.grid(row=2,column=4, sticky='w', rowspan=2)
-lbl_DipField_res = tk.Label(master=frm_rigidboxes, text= '', font='Calibri 12 bold')
-lbl_DipField_res.grid(row=2,column=5, rowspan=2)
-lbl_DipField_unit = tk.Label(master=frm_rigidboxes, text=' T', font='Calibri 12 bold')
-lbl_DipField_unit.grid(row=2,column=6, sticky='w', rowspan=2)
-frm_rigidboxes2 = tk.Frame(master = frm_rigid, relief=tk.FLAT)
-frm_rigidboxes2.grid(row=2, sticky='swe')
-lbl_spacer = tk.Label(master=frm_rigidboxes2, text='\t')
-lbl_spacer.grid(row=3,column=3)
-lbl_SepCh = tk.Label(master=frm_rigidboxes2, text='Charge Separation ')
-lbl_SepCh.grid(row=4,column=0, sticky='w')
-lbl_SepCh_res = tk.Label(master=frm_rigidboxes2, text= '')
-lbl_SepCh_res.grid(row=4,column=1)
-lbl_SepCh_unit = tk.Label(master=frm_rigidboxes2, text=' mm/e')
-lbl_SepCh_unit.grid(row=4,column=2, sticky='w')
-lbl_SepM = tk.Label(master=frm_rigidboxes2, text='Mass Separation ')
-lbl_SepM.grid(row=4,column=4, sticky='w')
-lbl_SepM_res = tk.Label(master=frm_rigidboxes2, text= '')
-lbl_SepM_res.grid(row=4,column=5)
-lbl_SepM_unit = tk.Label(master=frm_rigidboxes2, text=' mm/u')
-lbl_SepM_unit.grid(row=4,column=6, sticky='s')
-lbl_spacer = tk.Label(master=frm_rigidboxes2, text='\t')
-lbl_spacer.grid(row=5,column=3)
-lbl_Sep = tk.Label(master=frm_rigidboxes2, text='Mass per Charge ')
-lbl_Sep.grid(row=6,column=2, sticky='s')
-lbl_Sep_res = tk.Label(master=frm_rigidboxes2, text= '')
-lbl_Sep_res.grid(row=6,column=3)
+lbl_spacer2 = tk.Label(master=frm_rigidboxes0, text='  ')
+lbl_spacer2.grid(row=0,column=7, sticky='e')
+lbl_chstSelectorMax = tk.Label(master=frm_rigidboxes0, text='Max Charge State ')
+lbl_chstSelectorMax.grid(row=0,column=8, sticky='e')
+ent_chstSelectorMax_res = tk.Entry(master=frm_rigidboxes0, width=10)
+ent_chstSelectorMax_res.grid(row=0,column=9, sticky='e')
+ent_chstSelectorMax_res.insert(0, '0')
+lbl_chstSelector_unit = tk.Label(master=frm_rigidboxes0, text=' e')
+lbl_chstSelector_unit.grid(row=0,column=10, sticky='w')
+
+frm_rigidboxes = tk.Frame(master = frm_rigid, relief=tk.FLAT)
+frm_rigidboxes.grid(row=2, sticky='we')
+lbl_chstTable = tk.Label(master=frm_rigidboxes, text='Charge State', font='Calibri 12 bold')
+lbl_chstTable.grid(row=2,column=0, sticky='w')
+lbl_spacer = tk.Label(master=frm_rigidboxes, text='', font='Calibri 12 bold')
+lbl_spacer.grid(row=2,column=1)
+lbl_DeflU = tk.Label(master=frm_rigidboxes, text='Deflector U [V]', font='Calibri 12 bold')
+lbl_DeflU.grid(row=2,column=2)
+lbl_DipField = tk.Label(master=frm_rigidboxes, text='Dipole Field [T]', font='Calibri 12 bold')
+lbl_DipField.grid(row=2,column=3)
+lbl_spacer = tk.Label(master=frm_rigidboxes, text='', font='Calibri 12 bold')
+lbl_spacer.grid(row=2,column=4)
+lbl_SepCh = tk.Label(master=frm_rigidboxes, text='Charge Sep. [mm/e]')
+lbl_SepCh.grid(row=2,column=5)
+lbl_SepM = tk.Label(master=frm_rigidboxes, text='Mass Sep. [mm/u]')
+lbl_SepM.grid(row=2,column=6)
+lbl_Sep = tk.Label(master=frm_rigidboxes, text='Masses per Charge')
+lbl_Sep.grid(row=2,column=7)
 
 def updateRigid(event):
     lbl_reminderchst_res['text'] = lbl_chstRefr_res['text']
-    lbl_DeflU_res['text']        = round(1.015E6*math.log(4.07/3.93)*float(ent_Krefr.get())/float(ent_chstSelector_res.get()), 0)
-    lbl_DipField_res['text']     = round(math.sqrt(2E6*u*e_charge*float(ent_Krefr.get())*float(ent_Arefr.get()))/(float(ent_chstSelector_res.get())*e_charge), 4)
-    lbl_SepCh_res['text']        = round(800/float(ent_chstSelector_res.get()), 2)
-    lbl_SepM_res['text']         = round(800/float(ent_Arefr.get()), 2)
-    lbl_Sep_res['text']          = round(float(ent_Arefr.get())/float(ent_chstSelector_res.get()), 2)
+    chstmin = float(ent_chstSelectorMin_res.get())
+    chstmax = float(ent_chstSelectorMax_res.get())
+    if chstmax == 0 or chstmax < chstmin: chstmax = chstmin
+    
+    diff = chstmax - chstmin
+
+    for i in range(int(2*chstmin),int(2*chstmax)+1):
+        chst_current = float(i/2)
+
+        lbl_Chst_res = tk.Label(master=frm_rigidboxes, text='', font='Calibri 12 bold')
+        lbl_Chst_res.grid(row=2+i,column=0, sticky='w')
+        lbl_DeflU_res = tk.Label(master=frm_rigidboxes, text='', font='Calibri 12 bold')
+        lbl_DeflU_res.grid(row=2+i,column=2)
+        lbl_DipField_res = tk.Label(master=frm_rigidboxes, text='', font='Calibri 12 bold')
+        lbl_DipField_res.grid(row=2+i,column=3)
+        lbl_SepCh_res = tk.Label(master=frm_rigidboxes, text='')
+        lbl_SepCh_res.grid(row=2+i,column=5)
+        lbl_SepM_res = tk.Label(master=frm_rigidboxes, text='')
+        lbl_SepM_res.grid(row=2+i,column=6)
+        lbl_Sep_res = tk.Label(master=frm_rigidboxes, text='')
+        lbl_Sep_res.grid(row=2+i,column=7)
+
+        lbl_Chst_res['text']         = chst_current
+        lbl_DeflU_res['text']        = round(1.015E6*math.log(4.07/3.93)*float(ent_Krefr.get())/(chst_current), 0)
+        lbl_DipField_res['text']     = round(math.sqrt(2E6*u*e_charge*float(ent_Krefr.get())*float(ent_Arefr.get()))/((chst_current)*e_charge), 4)
+        lbl_SepCh_res['text']        = round(800/(chst_current), 2)
+        lbl_SepM_res['text']         = round(800/float(ent_Arefr.get()), 2)
+        lbl_Sep_res['text']          = round(float(ent_Arefr.get())/(chst_current), 2)
     
 frm_reac = tk.Frame(master = window, relief=tk.RAISED, borderwidth=1)
-frm_reac.grid(row=0,column=3, rowspan=3, padx=5, pady=5, sticky = 'nsew')
+frm_reac.grid(row=1,column=3, rowspan=3, padx=5, pady=5, sticky = 'nsew')
 frm_reactitle = tk.Frame(master = frm_reac, relief=tk.FLAT)
 frm_reactitle.grid(row=0, sticky='n')
 lbl_reac = tk.Label(master=frm_reactitle, text="Reaction Channels", width=80, font='Helvetica 12 bold')
@@ -599,6 +648,7 @@ frm_reacboxes = tk.Frame(master = frm_reac, relief=tk.FLAT)
 frm_reacboxes.grid(row=3, sticky='we')
 
 def updateChans(event):
+    if ent_dqenter.get() == '': return 0
     compA = float(lbl_Acomp_res['text'])
     refrA = float(ent_Arefr.get())
     diffA = compA - refrA
@@ -721,19 +771,19 @@ def updateChans(event):
                     lbl_reacchan_Z['text']    = int(reacZ)
                     lbl_reacchan_name['text'] = show + symbol
 
-                    q = float(ent_chstSelector_res.get())+float(ent_dqenter.get())
+                    q = float(ent_chstSelectorMin_res.get())+float(ent_dqenter.get())
                     lbl_reacchan_q['text']      = round(q,1)
 
                     mq = reacA / q
                     lbl_reacchan_mq['text']     = round(mq,3)
 
-                    dmq = (mq / (float(ent_Arefr.get())/float(ent_chstSelector_res.get()))) -1                    
+                    dmq = (mq / (float(ent_Arefr.get())/float(ent_chstSelectorMin_res.get()))) -1                    
                     lbl_reacchan_dmq['text']    = round(dmq,3)
 
                     posref = 800*dmq
                     lbl_reacchan_pos['text']    = round(posref +64, 1)
                     lbl_reacchan_posref['text'] = round(posref, 1)
-                    if abs(posref) < 0.9*float(lbl_SepM_res['text']):
+                    if abs(posref) < 0.9*float(800/float(ent_Arefr.get())):
                         lbl_reacchan_overlap['text'] = 'Overlap'
                         
                     if reacA == refrA and reacZ == refrZ:
@@ -752,6 +802,7 @@ def updateChans(event):
                         lbl_reacchan_overlap['font'] = 'Calibri 12 bold'
 
 def update(event):
+    namer(event)
     updateProj(event)
     updateTarg(event)
     updateComp(event)
