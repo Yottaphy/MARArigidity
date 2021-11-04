@@ -1,3 +1,10 @@
+# MARA Rigidity parameters calculator
+#
+# Developped by Jorge Romero at JYU
+# based on an excel sheet by Jan Sarén
+# joromero@jyu.fi
+# 2021
+
 from tkinter.constants import N, S
 import numpy as np
 import math
@@ -10,7 +17,6 @@ u           = 1.6605402E-27         #kg
 epsilon0    = 8.85419E-12           #F/m
 e_charge    = 1.6021773E-19         #C
 c           = 2.99792458E8          #m/s
-r0          = 1.4                   #fm
 pi          = 3.14159265359
 
 superscript = "⁰¹²³⁴⁵⁶⁷⁸⁹"
@@ -58,6 +64,17 @@ def namer(event):
         return 0
     lbl_Z['text'] = listName.index(symb) if symb in listName else 'Error'
 
+frm_radius0 = tk.Frame(master = window, relief=tk.RAISED, borderwidth=1)
+frm_radius0.grid(row=0,column=1, columnspan= 1, padx=5, pady=5, sticky = 'nsew')
+lbl_radius0_name = tk.Label(master=frm_radius0, text="r₀", width=10, font='Helvetica 12 bold')
+lbl_radius0_name.pack(side=tk.LEFT)
+ent_radius0 = tk.Entry(master=frm_radius0, width=6)
+ent_radius0.pack(side=tk.LEFT)
+ent_radius0.insert(0, '1.4')
+lbl_Z_name = tk.Label(master=frm_radius0, text="fm", width=3)
+lbl_Z_name.pack(side=tk.LEFT)
+lbl_Z = tk.Label(master=frm_radius0, text='', width=6)
+lbl_Z.pack(side=tk.LEFT)
 
 frm_proj = tk.Frame(master = window, relief=tk.RAISED, borderwidth=1)
 frm_proj.grid(row=1,column=0, padx=5, pady=5, sticky = 'nsew')
@@ -96,6 +113,7 @@ lbl_radproj_unit = tk.Label(master=frm_radproj,text="fm")
 lbl_radproj_unit.grid(row=0,column=2,sticky='w')
 
 def updateProj(event):
+    r0 = float(ent_radius0.get())
     n, symbol = getElement(ent_Aproj.get(),ent_Zproj.get())
     lbl_Nproj_res["text"] = str(n)
     a = int(ent_Aproj.get())
@@ -115,6 +133,8 @@ def updateProj(event):
             tens = int(a/10)
             a -= 10*tens
             show += superscript[tens]
+        elif a>=1:
+            show += superscript[0]
         show += superscript[int(a)]
         lbl_nameproj["text"] = show + symbol
 
@@ -155,6 +175,7 @@ lbl_radtarg_unit = tk.Label(master=frm_radtarg,text="fm")
 lbl_radtarg_unit.grid(row=0,column=2,sticky='w')
 
 def updateTarg(event):
+    r0 = float(ent_radius0.get())
     n, symbol = getElement(ent_Atarg.get(),ent_Ztarg.get())
     lbl_Ntarg_res["text"] = str(n)
     a = int(ent_Atarg.get())
@@ -174,6 +195,8 @@ def updateTarg(event):
             tens = int(a/10)
             a -= 10*tens
             show += superscript[tens]
+        elif a>=1:
+            show += superscript[0]
         show += superscript[int(a)]
         lbl_nametarg["text"] = show + symbol
 
@@ -230,6 +253,7 @@ lbl_compBohr_unit = tk.Label(master=frm_compK, text="v₀")
 lbl_compBohr_unit.grid(row=3,column=2)
 
 def updateComp(event):
+    r0 = float(ent_radius0.get())
     lbl_Zcomp_res["text"] = int(ent_Zproj.get()) + int(ent_Ztarg.get())
     lbl_Acomp_res["text"] = int(ent_Aproj.get()) + int(ent_Atarg.get())
 
@@ -246,6 +270,8 @@ def updateComp(event):
         tens = int(a/10)
         a -= 10*tens
         show += superscript[tens]
+    elif a>=1:
+        show += superscript[0]
     show += superscript[int(a)]
     lbl_namecomp["text"] = show + symbol
 
@@ -305,6 +331,7 @@ lbl_chstRefr_unit = tk.Label(master=frm_Krefr, text=' e', font = 'Calibri 12 bol
 lbl_chstRefr_unit.grid(row=3,column=2, sticky='w')
 
 def updateRefr(event):
+    r0 = float(ent_radius0.get())
     n, symbol = getElement(ent_Arefr.get(),ent_Zrefr.get())
     lbl_Nrefr_res["text"] = str(n)
     a = int(ent_Arefr.get())
@@ -323,6 +350,8 @@ def updateRefr(event):
             tens = int(a/10)
             a -= 10*tens
             show += superscript[tens]
+        elif a>=1:
+            show += superscript[0]
         show += superscript[int(a)]
         lbl_namerefr["text"] = show + symbol
 
@@ -368,6 +397,7 @@ lbl_ProjC_unit = tk.Label(master=frm_energiesboxes, text="c")
 lbl_ProjC_unit.grid(row=4, column=2)
 
 def updateCoulomb(event):
+    r0 = float(ent_radius0.get())
     Zt = float(ent_Ztarg.get())
     Zp = float(ent_Zproj.get())
     rt = float(lbl_radtarg_res["text"])
@@ -377,6 +407,7 @@ def updateCoulomb(event):
     lbl_CoulombK_res["text"]=round(Coul*float(lbl_Acomp_res["text"])/float(ent_Atarg.get()),2)
 
 def updateKV(event):
+    r0 = float(ent_radius0.get())
     v_proj                   = math.sqrt(2E6*e_charge*float(ent_ProjK.get())/(float(ent_Aproj.get())*u))
     lbl_ProjV_res['text']    = f'{v_proj:.3e}'
     lbl_ProjC_res['text']    = round(v_proj/c, 4)
@@ -448,6 +479,7 @@ lbl_backscV_unit = tk.Label(master=frm_scatterboxes, text="m/s")
 lbl_backscV_unit.grid(row=7, column=2)
 
 def updateScat(event):
+    r0 = int(ent_radius0.get())
     Atarg = float(ent_Atarg.get())
     Aproj = float(ent_Aproj.get())
     Kproj = float(ent_ProjK.get())
@@ -519,6 +551,7 @@ lbl_chstBack_unit = tk.Label(master=frm_chstatesboxes, text="e")
 lbl_chstBack_unit.grid(row=5, column=2)
 
 def updateChst(event):
+    r0 = int(ent_radius0.get())
     Zcomp = float(lbl_Zcomp_res['text'])
     Zproj = float(ent_Zproj.get())
     Ztarg = float(ent_Ztarg.get())
@@ -577,6 +610,7 @@ frm_rigidboxes = tk.Frame(master = frm_rigid, relief=tk.FLAT)
 frm_rigidboxes.grid(row=2, sticky='we')
 
 def updateRigid(event):
+    r0 = int(ent_radius0.get())
     for widget in frm_rigidboxes.winfo_children():
         widget.destroy()
 
@@ -663,6 +697,7 @@ frm_reacboxes = tk.Frame(master = frm_reac, relief=tk.FLAT)
 frm_reacboxes.grid(row=3, sticky='we')
 
 def updateChans(event):
+    r0 = float(ent_radius0.get())
     for widget in frm_reacboxes.winfo_children():
         widget.destroy()
 
@@ -783,6 +818,8 @@ def updateChans(event):
                         tens = int(a/10)
                         a -= 10*tens
                         show += superscript[tens]
+                    elif a>=1:
+                        show += superscript[0]
                     show += superscript[int(a)]
 
                     lbl_reacchan_A['text']    = int(reacA)
