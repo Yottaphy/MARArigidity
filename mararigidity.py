@@ -201,7 +201,7 @@ def updateTarg(event):
         lbl_nametarg["text"] = show + symbol
 
 frm_comp = tk.Frame(master = window, relief=tk.RAISED, borderwidth=1)
-frm_comp.grid(row=2,column=1, padx=5, pady=5, sticky = 'nsew')
+frm_comp.grid(row=2,column=0, padx=5, pady=5, sticky = 'nsew')
 frm_comptitle = tk.Frame(master = frm_comp, relief=tk.FLAT)
 frm_comptitle.pack()
 lbl_comp = tk.Label(master=frm_comptitle, text="Compound", width=20, font='Helvetica 12 bold')
@@ -276,7 +276,7 @@ def updateComp(event):
     lbl_namecomp["text"] = show + symbol
 
 frm_refr = tk.Frame(master = window, relief=tk.RAISED, borderwidth=1)
-frm_refr.grid(row=2,column=0, padx=5, pady=5, sticky = 'nsew')
+frm_refr.grid(row=2,column=1, padx=5, pady=5, sticky = 'nsew')
 frm_refrtitle = tk.Frame(master = frm_refr, relief=tk.FLAT)
 frm_refrtitle.pack()
 lbl_refr = tk.Label(master=frm_refrtitle, text="Reference", width=20, font='Helvetica 12 bold')
@@ -479,7 +479,6 @@ lbl_backscV_unit = tk.Label(master=frm_scatterboxes, text="m/s")
 lbl_backscV_unit.grid(row=7, column=2)
 
 def updateScat(event):
-    r0 = int(ent_radius0.get())
     Atarg = float(ent_Atarg.get())
     Aproj = float(ent_Aproj.get())
     Kproj = float(ent_ProjK.get())
@@ -551,7 +550,7 @@ lbl_chstBack_unit = tk.Label(master=frm_chstatesboxes, text="e")
 lbl_chstBack_unit.grid(row=5, column=2)
 
 def updateChst(event):
-    r0 = int(ent_radius0.get())
+    r0 = float(ent_radius0.get())
     Zcomp = float(lbl_Zcomp_res['text'])
     Zproj = float(ent_Zproj.get())
     Ztarg = float(ent_Ztarg.get())
@@ -610,7 +609,7 @@ frm_rigidboxes = tk.Frame(master = frm_rigid, relief=tk.FLAT)
 frm_rigidboxes.grid(row=2, sticky='we')
 
 def updateRigid(event):
-    r0 = int(ent_radius0.get())
+    r0 = float(ent_radius0.get())
     for widget in frm_rigidboxes.winfo_children():
         widget.destroy()
 
