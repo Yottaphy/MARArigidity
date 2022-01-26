@@ -855,6 +855,11 @@ def updateChans(event):
                         lbl_reacchan_posref['font'] = 'Calibri 12 bold'
                         lbl_reacchan_overlap['font'] = 'Calibri 12 bold'
 
+for i in range(0,5):
+    window.grid_columnconfigure(i, weight=1)
+    window.grid_rowconfigure(i, weight=1)
+
+
 def update(event):
     namer(event)
     updateProj(event)
@@ -870,9 +875,5 @@ def update(event):
 
 window.bind('<Return>', update)
 window.bind('<KP_Enter>', update)
-
-
-
-
 
 frm_proj.mainloop()
