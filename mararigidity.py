@@ -1,4 +1,6 @@
-# MARA Rigidity parameters calculator
+#!/usr/bin/env python
+# 
+# # MARA Rigidity parameters calculator
 #
 # Developped by Jorge Romero at JYU
 # based on an excel sheet by Jan Sarén
