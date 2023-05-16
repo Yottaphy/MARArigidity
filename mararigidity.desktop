@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=MARA Settings Calculator
+Type=Application
+Exec=python THEPATH/mararigidity.py
+Comment=Calculator for the Mass Analyzing Recoil Apparatus at JYFL Accelerator Laboratory, Finland.
+Path=THEPATH/MARArigidity
+Icon=THEPATH/MARA.png
+StartupWMClass=MARAcalc
