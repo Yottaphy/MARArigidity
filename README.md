@@ -6,11 +6,11 @@ Prequisite: Python3
 
 After downloading mararigidity.py, do:
 
-`$ chmod +x mararigidity.py`
+`$ chmod +x setup.sh`
 
 After that, only 
 
-`$ ./mararigidity.py`
+`$ ./setup.sh`
 
 will be required.
 
